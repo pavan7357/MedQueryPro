@@ -205,7 +205,7 @@ app.post("/update-availability", async (req, res) => {
 });
 
 // Hugging Face API Key and Model Name
-const API_KEY = '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'; // Replace with your actual API key
+const API_KEY = 'YOUR_API_KEY'; // Replace with your actual API key
 const MODEL_NAME = 'meta-llama/Llama-3.2-3B'; // Model you want to use
 
 // Function to generate a healthcare insight based on the prompt
