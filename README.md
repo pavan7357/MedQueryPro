@@ -1,10 +1,10 @@
 # MedQueryPro
 ## Project Objectives
-AI Research Retrieval: Utilize AI to quickly access and summarize the latest medical research for healthcare professionals.
-Secure Patient Data Collection: Gather necessary patient information without storing it, ensuring privacy and compliance.
-Real-Time Insights: Provide on-the-go insights for healthcare professionals to support informed decision-making.
-Doctor Availability Management: Enable doctors to easily update their availability for patient consultations.
-Appointment Booking: Allow patients to book appointments directly with available doctors, prioritizing emergency cases.
+1. AI Research Retrieval: Utilize AI to quickly access and summarize the latest medical research for healthcare professionals.
+2. Secure Patient Data Collection: Gather necessary patient information without storing it, ensuring privacy and compliance.
+3. Real-Time Insights: Provide on-the-go insights for healthcare professionals to support informed decision-making.
+4. Doctor Availability Management: Enable doctors to easily update their availability for patient consultations.
+5. Appointment Booking: Allow patients to book appointments directly with available doctors, prioritizing emergency cases.
 
 ## Database Initialization
 Initialize the database: Ensure your SQLite database is set up. Run the initialization script:
