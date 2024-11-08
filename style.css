@@ -1,0 +1,156 @@
+/* Reset styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+/* Custom background color */
+.bg-dark-custom {
+    background-color: #233d4b;
+    color: #ffffff; /* Optional: adjust text color for contrast */
+}
+
+/* Centered content box styling */
+.text-center {
+    max-width: 600px;
+    background-color: rgba(255, 255, 255, 0.9); /* Slightly transparent background for readability */
+    border-radius: 10px;
+}
+
+
+
+/* Ensures full height on mobile */
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+}
+
+.container-fluid {
+    height: 100vh; /* Full viewport height */
+}
+
+.row {
+    background-color: white;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.img-fluid {
+    object-fit: cover;
+    height: 100%;
+}
+
+.back-link {
+    color: #007bff;
+    text-decoration: none;
+}
+
+.back-link:hover {
+    text-decoration: underline;
+}
+
+
+/* Main Background */
+.main-background {
+    display: flex; /* Enable flexbox layout */
+    height: 100vh;
+}
+
+/* Left Side (Image) */
+.image-background {
+    width: 50%; /* Set to 50% width */
+    background-image: url('img/AI image 2.jpg'); /* Replace with your background image URL */
+    background-size: cover;
+    background-position: center;
+}
+
+/* Right Side (Form) */
+.main-container {
+    width: 50%; /* Set to 50% width */
+    text-align: center;
+    background-color: rgba(255, 255, 255, 0.85);
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+h1, h2 {
+    font-size: 2em;
+    color: #333;
+    margin-bottom: 15px;
+}
+
+p {
+    font-size: 1.1em;
+    color: #666;
+    margin-bottom: 20px;
+}
+
+/* Main Page Button Styles */
+.button-container {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.main-button {
+    display: block;
+    padding: 15px;
+    font-size: 1.2em;
+    color: white;
+    background-color: #4CAF50;
+    text-align: center;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.main-button:hover {
+    background-color: #45a049;
+}
+
+/* Registration Form Styles */
+.main-container input[type="text"],
+.main-container input[type="password"] {
+    width: 100%;
+    padding: 12px;
+    margin: 10px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+}
+
+.register-button {
+    width: 100%;
+    padding: 12px;
+    background-color: #4CAF50;
+    color: white;
+    font-size: 1em;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+}
+
+.register-button:hover {
+    background-color: #45a049;
+}
+
+.back-link {
+    display: block;
+    margin-top: 15px;
+    color: #4CAF50;
+    text-decoration: none;
+    font-weight: bold;
+    transition: color 0.3s ease;
+}
+
+.back-link:hover {
+    color: #388E3C;
+}

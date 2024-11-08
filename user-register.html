@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Registration - MedQueryPro</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container-fluid vh-100 d-flex align-items-center justify-content-center">
+        <div class="row w-75 shadow-lg rounded">
+            <div class="col-md-6 p-0">
+                <img src="img/registration.jpg" class="img-fluid w-100 h-100" style="object-fit: cover;">
+            </div>
+            <div class="col-md-6 d-flex align-items-center">
+                <div class="p-4 w-100">
+                    <h2 class="text-center mb-4">User Registration</h2>
+                    <div id="success-message" class="alert alert-success d-none" role="alert">
+                        Registration successful! <a href="/user-login.html" class="btn btn-link">Go to User Login</a>
+                    </div>
+                    <form id="registration-form" onsubmit="return handleRegistration(event);">
+                        <input type="hidden" name="role" value="Patient">
+                        
+                        <div class="form-group">
+                            <label for="name">Name</label>
+                            <input type="text" name="name" id="name" class="form-control" placeholder="Enter Full Name" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="sex">Sex</label>
+                            <select name="sex" id="sex" class="form-control" required>
+                                <option value="">Select Sex</option>
+                                <option value="Male">Male</option>
+                                <option value="Female">Female</option>
+                                <option value="Other">Other</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="age">Age</label>
+                            <input type="number" name="age" id="age" class="form-control" placeholder="Enter Age" required min="0">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="username">Username</label>
+                            <input type="text" name="username" id="username" class="form-control" placeholder="Enter Username" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="password">Password</label>
+                            <input type="password" name="password" id="password" class="form-control" placeholder="Enter Password" required>
+                        </div>
+                        
+                        <button type="submit" class="btn btn-primary btn-block mt-3">Register</button>
+                    </form>
+                    <p class="text-center mt-4">
+                        <small>
+                            Already a user? <a href="/user-login.html">User Login</a>
+                        </small>
+                    </p>
+                    <p class="text-center mt-3"><a href="index.html" class="back-link">Back to Main Page</a></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function handleRegistration(event) {
+            event.preventDefault(); // Prevent form submission
+
+            const formData = new FormData(document.getElementById('registration-form'));
+            const data = {};
+            formData.forEach((value, key) => { data[key] = value });
+
+            // Send registration data to the server
+            fetch('http://localhost:3000/register', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    // Show success message and link to user login
+                    document.getElementById('success-message').classList.remove('d-none');
+                } else {
+                    alert(data.message || "Registration failed. Please try again.");
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('An error occurred: ' + error.message);
+            });
+        }
+    </script>
+</body>
+</html>

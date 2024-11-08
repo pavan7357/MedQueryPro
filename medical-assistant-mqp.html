@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" sizes="16x16" href="\favicon_io\favicon-16x16.png">
+    <title>Medical Assistant - MedQueryPro</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #73b2bb; /* Light cyan background */
+            color: #333; /* Set text color */
+        }
+        .chat-container {
+            height: 400px;
+            overflow-y: auto;
+            border: 1px solid #ccc;
+            padding: 10px;
+            border-radius: 5px;
+            background-color: rgba(255, 255, 255, 0.8);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .chat-message {
+            margin: 10px 0;
+        }
+        .user-message {
+            text-align: right;
+            background-color: #d1e7dd; 
+            border-radius: 10px;
+            padding: 8px;
+            max-width: 75%;
+            display: inline-block;
+        }
+        .response-message {
+            text-align: left;
+            background-color: #e2e3e5; 
+            border-radius: 10px;
+            padding: 8px;
+            max-width: 75%;
+            display: inline-block;
+        }
+    </style>
+</head>
+<body>
+    <div class="container vh-100 d-flex flex-column align-items-center justify-content-center">
+        <h2 id="welcome-message"></h2>
+        <div class="chat-container" id="chat-container"></div>
+
+        <div class="input-group mt-3">
+            <input type="text" id="prompt-input" class="form-control" placeholder="Your query..." aria-label="User message">
+            <div class="input-group-append">
+                <button class="btn btn-success" id="send-button">Send</button>
+            </div>
+        </div>
+
+        <div class="mt-3">
+            <label for="availability">Are you available to take patients?</label>
+            <select id="availability" class="form-control">
+                <option value="yes">Yes</option>
+                <option value="no">No</option>
+            </select>
+            <button class="btn btn-info mt-2" id="update-availability">Update Availability</button>
+            <div id="availability-message" class="mt-3" style="display: none;"></div> <!-- Message container -->
+        </div>
+
+        <a href="index.html" class="btn btn-primary mb-3 mt-3">Log Out</a>
+    </div>
+
+    <script>
+        function getQueryParameter(name) {
+            const urlParams = new URLSearchParams(window.location.search);
+            return urlParams.get(name);
+        }
+
+        const userName = getQueryParameter('name');
+        const doctorName = getQueryParameter('doctorName'); // Fetching the doctor's name for availability update
+        document.getElementById('welcome-message').innerHTML = `Hi ${userName}! Welcome to MedQueryPro Healthcare Professional!!`;
+
+        document.getElementById('send-button').onclick = async function() {
+            const input = document.getElementById('prompt-input');
+            const message = input.value.trim();
+            if (message) {
+                const chatContainer = document.getElementById('chat-container');
+                
+                const messageElement = document.createElement('div');
+                messageElement.className = 'chat-message user-message';
+                messageElement.textContent = message;
+                chatContainer.appendChild(messageElement);
+                input.value = '';
+
+                try {
+                    const response = await fetch('http://localhost:3000/query', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({ query: message }),
+                    });
+
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! status: ${response.status}`);
+                    }
+
+                    const data = await response.json();
+                    const responseElement = document.createElement('div');
+                    responseElement.className = 'chat-message response-message';
+                    responseElement.textContent = data.response;
+                    chatContainer.appendChild(responseElement);
+                    chatContainer.scrollTop = chatContainer.scrollHeight;
+                } catch (error) {
+                    console.error('Error:', error);
+                    const errorElement = document.createElement('div');
+                    errorElement.className = 'chat-message response-message';
+                    errorElement.textContent = "An error occurred while fetching the response.";
+                    chatContainer.appendChild(errorElement);
+                }
+            }
+        };
+
+        // Update availability functionality
+        document.getElementById('update-availability').onclick = async function() {
+            const availability = document.getElementById('availability').value;
+            const doctorName = getQueryParameter('name'); // Ensure you have the doctor's name in the query parameters
+
+            try {
+                const response = await fetch('http://localhost:3000/update-availability', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ availability: availability, name: doctorName }), // Send availability and name
+                });
+
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+
+                const data = await response.json();
+                const messageContainer = document.getElementById('availability-message');
+                messageContainer.style.display = 'block'; // Show the message
+                messageContainer.textContent = data.message || "Availability updated successfully!";
+            } catch (error) {
+                console.error('Error:', error);
+                const messageContainer = document.getElementById('availability-message');
+                messageContainer.style.display = 'block'; // Show the message
+                messageContainer.textContent = 'An error occurred while updating availability: ' + error.message;
+            }
+        };
+    </script>
+</body>
+</html>
