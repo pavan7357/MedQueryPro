@@ -9,11 +9,14 @@ Appointment Booking: Allow patients to book appointments directly with available
 ## Database Initialization
 Initialize the database: Ensure your SQLite database is set up. Run the initialization script:
 `node initialize-db.js`
+
 Running the Application
 Start the server:
 `node server.js`
+
 Access the application: Open your web browser and navigate to:
 `http://localhost:3000`
+
 ## File Description:
 1. User Registration: Navigate to user-register.html to create a new user account.
 2. User Login: Use user-login.html to log in to your account.
